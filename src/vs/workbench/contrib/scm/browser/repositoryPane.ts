@@ -71,6 +71,7 @@ import { ColorDetector } from 'vs/editor/contrib/colorPicker/colorDetector';
 import { LinkDetector } from 'vs/editor/contrib/links/links';
 import { IOpenerService } from 'vs/platform/opener/common/opener';
 import { ITelemetryService } from 'vs/platform/telemetry/common/telemetry';
+import { SimpleButton } from 'vs/editor/contrib/find/findWidget';
 
 type TreeElement = ISCMResourceGroup | IResourceNode<ISCMResource, ISCMResourceGroup> | ISCMResource;
 
@@ -685,6 +686,18 @@ export class RepositoryPane extends ViewPane {
 		// Input
 		this.inputContainer = append(container, $('.scm-editor'));
 		const editorContainer = append(this.inputContainer, $('.scm-editor-container'));
+
+
+		const controls = append(editorContainer, $('.controls'));
+		const regex = this._register(new SimpleButton({
+			label: 'Use Editor',
+			className: 'codicon codicon-preview',
+			onTrigger: () => {
+				this.notificationService.info('Hello World!');
+			}
+		}));
+		append(controls, regex.domNode);
+		append(editorContainer, controls);
 
 		const placeholderTextContainer = append(editorContainer, $('.scm-editor-placeholder'));
 		const updatePlaceholder = () => {
