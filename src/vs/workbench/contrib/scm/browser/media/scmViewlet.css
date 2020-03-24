@@ -172,14 +172,6 @@
 	outline-offset: -1px;
 }
 
-.scm-viewlet .scm-editor-container > .controls {
-	z-index: 1;
-	display: block;
-	position: absolute;
-	top: 6px;
-	right: 4px;
-}
-
 .scm-viewlet .scm-editor-container > .scm-editor-validation {
 	position: absolute;
 	width: 100%;

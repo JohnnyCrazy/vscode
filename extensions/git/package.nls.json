@@ -99,6 +99,8 @@
 	"config.ignoreMissingGitWarning": "Ignores the warning when Git is missing.",
 	"config.ignoreLimitWarning": "Ignores the warning when there are too many changes in a repository.",
 	"config.defaultCloneDirectory": "The default location to clone a git repository.",
+	"config.useEditorToCommit": "Use an editor to write commit changes",
+	"config.verboseCommit": "Verbose output when commiting. Only works with useEditorToCommit",
 	"config.enableSmartCommit": "Commit all changes when there are no staged changes.",
 	"config.smartCommitChanges": "Control which changes are automatically staged by Smart Commit.",
 	"config.smartCommitChanges.all": "Automatically stage all changes.",

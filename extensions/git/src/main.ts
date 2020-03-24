@@ -23,6 +23,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { createIPCServer, IIPCServer } from './ipc/ipcServer';
 import { GitTimelineProvider } from './timelineProvider';
+import { GitEditor } from './gitEditor';
 
 const deactivateTasks: { (): Promise<any>; }[] = [];
 
@@ -51,8 +52,12 @@ async function createModel(context: ExtensionContext, outputChannel: OutputChann
 		const askpass = new Askpass(ipc);
 		disposables.push(askpass);
 		env = { ...env, ...askpass.getEnv() };
+
+		const gitEditor = new GitEditor(ipc);
+		disposables.push(gitEditor);
+		env = { ...env, ...gitEditor.getEnv() };
 	} else {
-		env = { ...env, ...Askpass.getDisabledEnv() };
+		env = { ...env, ...Askpass.getDisabledEnv(), ...GitEditor.getDisabledEnv() };
 	}
 
 	const git = new Git({ gitPath: info.path, version: info.version, env });

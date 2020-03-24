@@ -128,6 +128,8 @@ export interface CommitOptions {
 	signoff?: boolean;
 	signCommit?: boolean;
 	empty?: boolean;
+	useEditor?: boolean;
+	verbose?: boolean;
 }
 
 export interface Repository {

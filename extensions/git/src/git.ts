@@ -1267,8 +1267,18 @@ export class Repository {
 		}
 	}
 
-	async commit(message: string, opts: CommitOptions = Object.create(null)): Promise<void> {
-		const args = ['commit', '--quiet', '--allow-empty-message', '--file', '-'];
+	async commit(message?: string, opts: CommitOptions = Object.create(null)): Promise<void> {
+		const args = ['commit'];
+		const options: SpawnOptions = {};
+
+		if (opts.useEditor) {
+			if (opts.verbose) {
+				args.push('--verbose');
+			}
+		} else {
+			options.input = message || '';
+			args.concat(['--allow-empty-message', '--file', '-']);
+		}
 
 		if (opts.all) {
 			args.push('--all');
@@ -1290,7 +1300,7 @@ export class Repository {
 		}
 
 		try {
-			await this.run(args, { input: message || '' });
+			await this.run(args, options);
 		} catch (commitErr) {
 			await this.handleCommitError(commitErr);
 		}

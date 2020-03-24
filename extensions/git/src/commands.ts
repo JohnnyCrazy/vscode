@@ -1397,6 +1397,14 @@ export class CommandCenter {
 			opts.signoff = true;
 		}
 
+		if (config.get<boolean>('useEditorToCommit')) {
+			opts.useEditor = true;
+		}
+
+		if (config.get<boolean>('verboseCommit')) {
+			opts.verbose = true;
+		}
+
 		const smartCommitChanges = config.get<'all' | 'tracked'>('smartCommitChanges');
 
 		if (
@@ -1416,7 +1424,7 @@ export class CommandCenter {
 
 		const message = await getCommitMessage();
 
-		if (!message) {
+		if (!message && !config.get('useEditorToCommit')) {
 			return false;
 		}
 
@@ -1446,10 +1454,13 @@ export class CommandCenter {
 
 	private async commitWithAnyInput(repository: Repository, opts?: CommitOptions): Promise<void> {
 		const message = repository.inputBox.value;
+		const root = Uri.file(repository.root);
+		const config = workspace.getConfiguration('git', root);
+
 		const getCommitMessage = async () => {
 			let _message: string | undefined = message;
 
-			if (!_message) {
+			if (!_message && !config.get<boolean>('useEditorToCommit')) {
 				let value: string | undefined = undefined;
 
 				if (opts && opts.amend && repository.HEAD && repository.HEAD.commit) {
